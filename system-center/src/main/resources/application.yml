@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: system-center
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  profiles:
+    active: dev
+  datasource:
+    druid:
+      type: com.alibaba.druid.pool.DruidDataSource
+      master:
+        url: jdbc:mysql://localhost:3306/sys_center?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        username: root
+        password: xiajun
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      slave:
+        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        username: root
+        password: xiajun
+        driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 2020
+# mybatis配置
+mybatis-plus:
+  # 搜索指定包别名
+  type-aliases-package: com.xzj.**.entity
+knife4j:
+  enable: true
+logging:
+  level:
+    root: info
+    com.xzj.sys.mapper: debug
