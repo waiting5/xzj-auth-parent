@@ -1,5 +1,6 @@
 package com.xzj.sys.controller;
 
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +47,7 @@ public class SysDictTypeController {
     @Resource
     private SysDictTypeService sysDictTypeService;
 
-    @ApiOperation("新增字典类型数据")
+    @ApiOperation("字典类型树")
     @GetMapping("tree")
     public AjaxResult tree(SysDictType sysDictType){
         QueryWrapper<SysDictType> wrapper = new QueryWrapper<>();
@@ -66,7 +68,16 @@ public class SysDictTypeController {
     @ApiOperation("新增字典类型数据")
     @PostMapping("addDicType")
     public AjaxResult add(@RequestBody SysDictType sysDictType){
-        boolean result = sysDictTypeService.save(sysDictType);
+        boolean result;
+        if(ObjUtil.isNotEmpty(sysDictType.getDictId())){
+            sysDictType.setCreatedTime(new Date());
+            // 更新数据
+            result = sysDictTypeService.updateById(sysDictType);
+        }else{
+            sysDictType.setUpdatedTime(new Date());
+            // 新增数据
+            result = sysDictTypeService.save(sysDictType);
+        }
         if(result){
             return AjaxResult.successResult();
         }else{
@@ -74,33 +85,17 @@ public class SysDictTypeController {
         }
     }
 
-    /**
-     * 更新数据
-     *
-     * @param sysDictType 实例对象
-     * @return 实例对象
-     */
-    @ApiOperation("更新字典类型数据")
-    @PostMapping("editDicType")
-    public AjaxResult edit(@RequestBody SysDictType sysDictType){
-        boolean result = sysDictTypeService.updateById(sysDictType);
-        if(result){
-            return AjaxResult.successResult();
-        }else{
-            return AjaxResult.failResult();
-        }
-    }
 
     /**
      * 通过主键删除数据
      *
-     * @param dictId 主键
+     * @param sysDictType 删除对象
      * @return 是否成功
      */
     @ApiOperation("通过主键删除字典类型数据")
-    @PostMapping("deleteTypeById")
-    public AjaxResult deleteById(@RequestBody Integer dictId){
-        boolean result = sysDictTypeService.removeById(dictId);
+    @PostMapping("delTypeById")
+    public AjaxResult deleteById(@RequestBody SysDictType sysDictType){
+        boolean result = sysDictTypeService.removeById(sysDictType.getDictId());
         if(result){
             return AjaxResult.successResult();
         }else{

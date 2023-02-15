@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 /**
  * 类名 @ClassName SysDictData
@@ -16,6 +17,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  **/
 @ApiModel(value = "字典数据表",description = "")
 @TableName("sys_dict_data")
+@Data
 public class SysDictData extends BaseField {
 
     /** 字典编码 */
