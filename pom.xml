@@ -11,6 +11,7 @@
     <modules>
         <module>xzj-auth-baisc</module>
         <module>system-center</module>
+        <module>minio-file</module>
     </modules>
 
     <properties>

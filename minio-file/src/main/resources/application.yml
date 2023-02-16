@@ -1,0 +1,18 @@
+server:
+  port: 2024
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  #minio配置
+  minio:
+    access-key: 13KYv9w5SzUBqd6d      #key就是docker初始化是设置的，密钥相同
+    secret-key: KC1TZN7eddaEckSHW1EhIYbAINoi1Uby
+    url: http://localhost:9000
+    bucket-name: test
+  thymeleaf:
+    cache: false
+  application:
+    name: minio-file
